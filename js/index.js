@@ -1,47 +1,63 @@
-console.log('Conectado')
+console.log("Conectado...")
 
-const mensaje = document.getElementById('mensaje')
-const btnCambiar = document.getElementById('btnCambiar')
-const inputTarea = document.getElementById('inputTarea')
-const btnAgregar = document.getElementById('btnAgregar')
-const listaTareas = document.getElementById('listaTareas')
+const mensaje = document.getElementById("mensaje")
+const btnCambiar = document.getElementById("btnCambiar")
+const inputTarea = document.getElementById("inputTarea")
+const btnAgregar = document.getElementById("btnAgregar")
+const listaTareas = document.getElementById("listaTareas")
 
-console.log('@@@ elelemtos =>', mensaje,btnCambiar,inputTarea ,btnAgregar,listaTareas)
+const obtenerTareas = () => {
+    return JSON.parse(localStorage.getItem('tareas')) || []
+}
 
-btnCambiar.addEventListener('click',()=>{
+const guardarTareas = (tareas) => {
+    localStorage.setItem('tareas', JSON.stringify(tareas))
+}
 
+const eliminarTarea = (index) => {
+    const tareas = obtenerTareas()
+    tareas.splice(index, 1)
+    guardarTareas(tareas)
+    renderizarTareas()
+}
+
+const renderizarTareas = () => {
+    listaTareas.innerHTML = ''
+    const tareas = obtenerTareas()
+
+    tareas.forEach((texto, index) => {
+        const nuevaTarea = document.createElement('li')
+        nuevaTarea.textContent = texto
+
+        const btnBorrar = document.createElement('button')
+        btnBorrar.textContent = '❌'
+        btnBorrar.style.marginLeft = '10px'
+        btnBorrar.addEventListener('click', () => {
+            eliminarTarea(index)
+        })
+
+        nuevaTarea.appendChild(btnBorrar)
+        listaTareas.appendChild(nuevaTarea)
+    })
+}
+
+btnCambiar.addEventListener('click', () =>{
     mensaje.textContent = 'Lo cambiamos con un click'
-
 })
 
-
-btnAgregar.addEventListener('click',() =>{
-
+btnAgregar.addEventListener('click', () => {
     const texto = inputTarea.value.trim()
-    if(texto ===''){
-
-        alert('Escribe antes de agregar')
+    if(texto === ''){
+        alert('Escribe algo antes de agregar la tarea.')
         return
-
     }
 
-    const nuevaTarea = document.createElement('li')
-
-    nuevaTarea.textContent = texto 
-
-    const btnBorrar = document.createElement('button')
-
-    btnBorrar.textContent = 'X'
-
-    btnBorrar.style.marginLeft = '10px'
-    btnBorrar.addEventListener('click',()=>{
-
-        listaTareas.removeChild(nuevaTarea)
-
-    })
-
-    nuevaTarea.appendChild(btnBorrar)
-    listaTareas.appendChild(nuevaTarea)
+    const tareas = obtenerTareas()
+    tareas.push(texto)
+    guardarTareas(tareas)
+    renderizarTareas()
     inputTarea.value = ''
-
 })
+
+// Render inicial al cargar
+renderizarTareas()
