@@ -34,12 +34,93 @@ button:hover{
 ul{
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 ul li{
-
     background-color: #E0E7FF;
     margin: 5px 0;
-    padding: 8px;
+    padding: 8px 12px;
     border-radius: 5px;
+
+    /* Mejor presentación de cada ítem */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* El texto (tu <span>) puede crecer y hacer wrap */
+ul li span {
+    flex: 1;
+    text-align: left;
+    word-break: break-word;
+}
+
+/* Contenedor de acciones si en el futuro los agrupas */
+ul li .acciones {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#acciones-lista{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 12px 0 4px;
+    flex-wrap: wrap;
+}
+
+/* CORREGIDO: con espacio entre #filtros y .filtro */
+#filtros .filtro{
+    background-color: #E6EEF7;
+    color: #0b2a3c;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#filtros .filtro:hover{
+    background-color: #d7e5f3;
+}
+
+/* Activo */
+#filtros .filtro.activo{
+    outline: 2px solid #0077CC;
+    font-weight: 600;
+}
+
+/* Contador de pendientes con estilo sutil */
+#contadorPendientes{
+    font-size: 0.95rem;
+    color: #0b2a3c;
+}
+
+/* Botón “Borrar completadas” con tono de acción */
+#btnBorrarCompletadas{
+    background-color: #e53935;
+}
+#btnBorrarCompletadas:hover{
+    background-color: #c62828;
+}
+
+
+/************************************/
+
+#acciones button#btnBorrarCompletadas{
+background-color: #fc0303;
+color: white;
+padding:  8px 12px;
+border-radius: 6px;
+cursor: pointer;
+
+}
+
+#contadorPendientes{
+    margin-left: 12px;
+    font-size: .95rem;
+    color: #555;
 }
